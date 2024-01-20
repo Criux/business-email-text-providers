@@ -1,7 +1,12 @@
 package com.kmarinos.businessemaildemo;
 
-import com.kmarinos.businessemaildemo.mail.EmailTextProvider;
-import com.kmarinos.businessemaildemo.mail.offerProviders.*;
+import com.kmarinos.businessemaildemo.mail.demo.offer.OfferContext;
+import com.kmarinos.businessemaildemo.core.EmailTextBuilder;
+import com.kmarinos.businessemaildemo.mail.demo.offer.fallback.OfferFallbackTextProvider;
+import com.kmarinos.businessemaildemo.mail.demo.offer.kfz.OfferKfzTextProvider;
+import com.kmarinos.businessemaildemo.mail.demo.offer.kfzAndKps.OfferKfzAndKpsTextProvider;
+import com.kmarinos.businessemaildemo.mail.demo.offer.kps.OfferKpsTextProvider;
+import com.kmarinos.businessemaildemo.mail.demo.offer.simple.SimpleTextProvider;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,9 +19,9 @@ public class BusinessEmailDemoApplication {
         SpringApplication.run(BusinessEmailDemoApplication.class, args);
     }
 
-    public EmailTextProvider<OfferContext> registerTextProviders(OfferContext context) {
+    public EmailTextBuilder<OfferContext> registerTextProviders(OfferContext context) {
 
-        var emailText = new EmailTextProvider<OfferContext>();
+        var emailText = new EmailTextBuilder<OfferContext>();
 
         emailText.registerTextProvider(100, () -> new OfferKfzTextProvider(context))
                 .registerTextProvider(200, () -> new OfferKpsTextProvider(context))
